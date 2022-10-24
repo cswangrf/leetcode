@@ -12,6 +12,40 @@
 
         }
 
+        #region 1239. Maximum Length of a Concatenated String with Unique Characters
+        /// <summary>
+        /// You are given an array of strings arr. A string s is formed by the 
+        /// concatenation of a subsequence of arr that has unique characters.
+        /// A subsequence is an array that can be derived from another array 
+        /// by deleting some or no elements without changing the order of the
+        /// remaining elements.
+        /// https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns>Return the maximum possible length of s.</returns>
+        public int MaxLength(IList<string> arr)
+        {
+            Dictionary<char, List<int>> dict = new Dictionary<char, List<int>>();
+            for (int i = 0; i < arr.Count; i++)
+            {
+                foreach (char c in arr[i])
+                {
+                    if (dict.ContainsKey(c))
+                    {
+                        dict[c].Add(i);
+                    }
+                    else
+                    {
+                        dict.Add(c, new List<int>() { i });
+                    }
+                }
+            }
+
+            // TODO
+            return -1;
+        }
+        #endregion
+
         #region 645. Set Mismatch
         /// <summary>
         /// You have a set of integers s, which originally contains all
@@ -31,9 +65,9 @@
         {
             Array.Sort(nums);
             int[] result = new int[2];
-            for(int i = 1; i < nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
-                if(nums[i] == nums[i-1])
+                if (nums[i] == nums[i - 1])
                 {
                     result[0] = nums[i];
                     result[1] = nums[i] + 1;
@@ -203,7 +237,7 @@
         public int CountTime(string time)
         {
             int a = 1, b = 1;
-            if(time[0] == '?' && time[1] == '?')
+            if (time[0] == '?' && time[1] == '?')
             {
                 a = 24;
             }
@@ -231,11 +265,11 @@
             {
                 b = 60;
             }
-            else if(time[3] == '?')
+            else if (time[3] == '?')
             {
                 b = 6;
             }
-            else if(time[4] == '?')
+            else if (time[4] == '?')
             {
                 b = 10;
             }
@@ -276,7 +310,7 @@
         public int CountDistinctIntegers(int[] nums)
         {
             HashSet<int> set = new HashSet<int>();
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 set.Add(nums[i]);
                 set.Add(reverseInt(nums[i]));
@@ -294,7 +328,7 @@
                 a = a / 10;
             }
             int ret = stack.Dequeue();
-            while(stack.Count >0)
+            while (stack.Count > 0)
             {
                 ret = ret * 10 + stack.Dequeue();
             }
@@ -314,13 +348,13 @@
         {
             Array.Sort(nums);
             int ret = -1;
-            for(int i = 0; i< nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] >= 0) break;
                 for (int j = nums.Length - 1; j > i; j--)
                 {
                     if (nums[j] <= 0) break;
-                    if(nums[i] + nums[j] == 0)
+                    if (nums[i] + nums[j] == 0)
                     {
                         ret = Math.Max(ret, nums[j]);
                     }
@@ -345,17 +379,17 @@
         public int[][] SpiralMatrix(int m, int n, ListNode head)
         {
             int[][] ret = new int[m][];
-            for(int i=0;i<m;i++)
+            for (int i = 0; i < m; i++)
             {
                 ret[m] = new int[n];
-                for(int j=0;j<n;j++)
+                for (int j = 0; j < n; j++)
                 {
                     ret[m][n] = -1;
                 }
             }
             int index = 0;
             int r = 1, c = 1;
-            while (head!=null)
+            while (head != null)
             {
 
                 index++;
@@ -371,9 +405,9 @@
         {
             char a = 'a';
             Dictionary<char, char> dict = new Dictionary<char, char>();
-            foreach(char c in key)
+            foreach (char c in key)
             {
-                if(dict.ContainsKey(c) || c == ' ')
+                if (dict.ContainsKey(c) || c == ' ')
                 {
                     continue;
                 }
@@ -381,7 +415,7 @@
                 a++;
             }
             StringBuilder builder = new StringBuilder();
-            foreach(char c in message)
+            foreach (char c in message)
             {
                 if (c == ' ')
                     builder.Append(c);
@@ -408,11 +442,11 @@
         public double CalculateTax(int[][] brackets, int income)
         {
             double ret = 0;
-            for(int i=0; i< brackets.Length; i++)
+            for (int i = 0; i < brackets.Length; i++)
             {
                 int tmp = brackets[i][0];
                 tmp = tmp < income ? tmp : income;
-                if(i>0)
+                if (i > 0)
                 {
                     tmp -= brackets[i - 1][0];
                 }
@@ -468,16 +502,16 @@
         {
             Dictionary<char, int> dicts = new Dictionary<char, int>();
             Dictionary<char, int> dictt = new Dictionary<char, int>();
-            for (char a='a';a<='z';a++)
+            for (char a = 'a'; a <= 'z'; a++)
             {
                 dicts.Add(a, 0);
                 dictt.Add(a, 0);
             }
-            foreach(char c in s)
+            foreach (char c in s)
             {
                 dicts[c] = dicts[c] + 1;
             }
-            foreach(char c in t)
+            foreach (char c in t)
             {
                 if (dicts[c] > 0)
                 {
@@ -489,7 +523,7 @@
                 }
             }
             int ret = 0;
-            for(char c='a';c<='z'; c++)
+            for (char c = 'a'; c <= 'z'; c++)
             {
                 ret += dicts[c] + dictt[c];
             }
@@ -509,13 +543,13 @@
         public int PrefixCount(string[] words, string pref)
         {
             int ret = 0;
-            foreach(string word in words)
+            foreach (string word in words)
             {
                 if (word.StartsWith(pref))
                     ret++;
             }
             return ret;
-         }
+        }
         #endregion
 
         #region 5916. Minimum Operations to Convert Number
@@ -637,7 +671,7 @@
             int index = 0;
             int pre = -1;
             int current = -1;
-            while(head.next!=null)
+            while (head.next != null)
             {
                 index++;
                 bool b = NextNodeIsLocalMaxOrMin(head);
@@ -646,7 +680,7 @@
                     pre = current;
                     current = index;
                 }
-                if(pre != current && pre != -1)
+                if (pre != current && pre != -1)
                 {
                     ret[0] = Math.Min(ret[0], current - pre);
                     ret[1] = ret[1] + current - pre;
@@ -654,7 +688,7 @@
                 }
                 head = head.next;
             }
-            if(ret[0] == int.MaxValue)
+            if (ret[0] == int.MaxValue)
             {
                 ret = new int[] { -1, -1 };
             }
@@ -682,15 +716,15 @@
         public int SmallestEqual(int[] nums)
         {
             int ret = int.MaxValue;
-            for(int i=0;i<nums.Length;i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                if(i%10==nums[i])
+                if (i % 10 == nums[i])
                 {
                     ret = Math.Min(ret, i);
                 }
             }
 
-            return ret == int.MaxValue ? -1:ret;
+            return ret == int.MaxValue ? -1 : ret;
         }
         #endregion
 
@@ -759,7 +793,7 @@
             if (n % 2 == 0)
             {
                 int ret = 0;
-                for(int i = 0; i < n / 2; i++)
+                for (int i = 0; i < n / 2; i++)
                 {
                     ret += 2 * i + 1;
                 }
@@ -774,7 +808,7 @@
                 }
                 k = k / n;
                 int ret = 0;
-                for(int i = 0; i < n / 2; i++)
+                for (int i = 0; i < n / 2; i++)
                 {
                     ret += k - (2 * i + 1);
                 }
@@ -792,7 +826,7 @@
         public bool ThreeConsecutiveOdds(int[] arr)
         {
             int count = 0;
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (arr[i] % 2 != 0)
                 {
@@ -811,9 +845,9 @@
         public int MinSwaps(int[][] grid)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            for(int row = 0; row < grid.Length; row++)
+            for (int row = 0; row < grid.Length; row++)
             {
-                for(int col = grid[0].Length - 1; col > row; col--)
+                for (int col = grid[0].Length - 1; col > row; col--)
                 {
                     int i = grid[row][col];
                     if (i == 1)
@@ -825,7 +859,7 @@
                     }
                 }
             }
-            foreach(KeyValuePair<int, int> pair in dict)
+            foreach (KeyValuePair<int, int> pair in dict)
             {
 
             }
@@ -837,20 +871,20 @@
         #region 5476. Find the Winner of an Array Game
         public int GetWinner(int[] arr, int k)
         {
-            if (k >= arr.Length-1)
+            if (k >= arr.Length - 1)
             {
                 Array.Sort(arr);
                 return arr[arr.Length - 1];
             }
             int ret = arr[0];
             int count = 0;
-            for(int i = 1; i < arr.Length; i++)
+            for (int i = 1; i < arr.Length; i++)
             {
-                if(count == k)
+                if (count == k)
                 {
                     break;
                 }
-                if(ret > arr[i])
+                if (ret > arr[i])
                 {
                     count++;
                 }
@@ -871,9 +905,9 @@
             int ret = 0;
             for (int i = 0; i < arr.Length - 2; i++)
             {
-                for (int j = i+1; j < arr.Length - 1; j++)
+                for (int j = i + 1; j < arr.Length - 1; j++)
                 {
-                    for (int k = j+1; k < arr.Length; k++)
+                    for (int k = j + 1; k < arr.Length; k++)
                     {
                         if (Math.Abs(arr[i] - arr[j]) <= a
                             && Math.Abs(arr[j] - arr[k]) <= b
@@ -892,7 +926,7 @@
         {
             List<string> ret = new List<string>();
             Dictionary<char, int> dict = new Dictionary<char, int>();
-            foreach(char c in s)
+            foreach (char c in s)
             {
                 if (dict.ContainsKey(c))
                 {
@@ -939,9 +973,9 @@
         {
             List<string> list = new List<string>();
             Dictionary<string, int> dict = new Dictionary<string, int>();
-            foreach(string name in names)
+            foreach (string name in names)
             {
-                if(dict.ContainsKey(name) || list.Contains(name))
+                if (dict.ContainsKey(name) || list.Contains(name))
                 {
                     if (dict.ContainsKey(name))
                     {
@@ -979,7 +1013,7 @@
         public int XorOperation(int n, int start)
         {
             int ret = start;
-            for(int i = 1; i < n; i++)
+            for (int i = 1; i < n; i++)
             {
                 ret = ret ^ (start + 2 * i);
             }
@@ -1002,7 +1036,7 @@
                 int mid = (left + right) / 2;
                 int flower = 0;
                 int bouquet = 0;
-                for(int i = 0; i < bloomDay.Length; i++)
+                for (int i = 0; i < bloomDay.Length; i++)
                 {
                     if (bloomDay[i] > mid)
                         flower = 0;
@@ -1025,7 +1059,7 @@
         public int FindLeastNumOfUniqueInts(int[] arr, int k)
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
-            foreach(int i in arr)
+            foreach (int i in arr)
             {
                 if (dict.ContainsKey(i))
                     dict[i]++;
@@ -1034,13 +1068,13 @@
             }
             int[] tmp = new int[dict.Count];
             int index = 0;
-            foreach(KeyValuePair<int, int> pair in dict)
+            foreach (KeyValuePair<int, int> pair in dict)
             {
                 tmp[index++] = pair.Value;
             }
             Array.Sort(tmp);
             int ret = tmp.Length;
-            for(int j = 0; j < tmp.Length; j++)
+            for (int j = 0; j < tmp.Length; j++)
             {
                 k = k - tmp[j];
                 if (k >= 0)
@@ -1060,7 +1094,7 @@
         /// <returns></returns>
         public int[] RunningSum(int[] nums)
         {
-            for(int i = 1; i < nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
                 nums[i] = nums[i] + nums[i - 1];
             }
@@ -1070,16 +1104,16 @@
         public int[] Shuffle(int[] nums, int n)
         {
             int[] tmp = new int[n];
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 tmp[i] = nums[i + n];
             }
-            for(int i = n - 1; i > 0; i--)
+            for (int i = n - 1; i > 0; i--)
             {
-                nums[2*i] = nums[i];
+                nums[2 * i] = nums[i];
             }
             int j = 0;
-            for(int i = 1; i < 2 * n - 1; i += 2)
+            for (int i = 1; i < 2 * n - 1; i += 2)
             {
                 nums[i] = tmp[j++];
             }
@@ -1117,7 +1151,7 @@
             int tmpMax = 0;
             int index = 0;
             Dictionary<int, int> dic = new Dictionary<int, int>();
-            foreach(char c in s)
+            foreach (char c in s)
             {
                 if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
                     dic.Add(index, 1);
@@ -1126,14 +1160,14 @@
                 index++;
             }
 
-            for(int i=0;i<k;i++)
+            for (int i = 0; i < k; i++)
             {
                 if (i == s.Length) break;
                 tmpMax += dic[i];
             }
 
             int ret = tmpMax;
-            for (int j = k; j < s.Length; j++) 
+            for (int j = k; j < s.Length; j++)
             {
                 tmpMax = tmpMax - dic[j - k] + dic[k];
                 ret = Math.Max(ret, tmpMax);
@@ -1190,9 +1224,9 @@
         public int CountTriplets(int[] arr)
         {
             int ret = 0, left = -1, right = -1;
-            for(int i = 1; i < arr.Length; i++)
+            for (int i = 1; i < arr.Length; i++)
             {
-                ret += CountTriplets(arr, 0, i, ref left) 
+                ret += CountTriplets(arr, 0, i, ref left)
                     + CountTriplets(arr, i + 1, arr.Length - 1, ref right);
                 if (left >= 0 && right >= 0)
                     ret += left == right ? 1 : 0;
@@ -1216,7 +1250,7 @@
             var = -1;
             for (int i = start + 1; i < end; i++)
             {
-                ret += CountTriplets(arr, start, i, ref left) 
+                ret += CountTriplets(arr, start, i, ref left)
                     + CountTriplets(arr, i + 1, end, ref right);
                 if (left >= 0 && right >= 0)
                 {
@@ -1248,7 +1282,7 @@
         {
             int index = -1;
             List<string> ret = new List<string>();
-            for(int i=1;i<=n;i++)
+            for (int i = 1; i <= n; i++)
             {
                 index++;
                 if (index >= target.Length)
@@ -1277,7 +1311,7 @@
                 if (max > nums.Length - i) break;
                 int tmp = 1;
                 int tMax = nums[i], tMin = nums[i];
-                for (int j = i+1; j < nums.Length; j++)
+                for (int j = i + 1; j < nums.Length; j++)
                 {
                     tMax = Math.Max(tMax, nums[j]);
                     tMin = Math.Min(tMin, nums[j]);
@@ -1299,14 +1333,14 @@
         {
             int distance = -1;
             int ret = 0;
-            foreach(int i in nums)
+            foreach (int i in nums)
             {
                 ret += i;
                 if (ret == 0)
                     continue;
-                if(ret==1)
+                if (ret == 1)
                     distance++;
-                if(ret==2)
+                if (ret == 2)
                 {
                     if (distance < k)
                         return false;
@@ -1337,7 +1371,7 @@
             List<string> reachable = new List<string>();
             List<string> unreachabel = new List<string>();
 
-            foreach(IList<string> path in paths)
+            foreach (IList<string> path in paths)
             {
                 if (!reachable.Contains(path[0]))
                     reachable.Add(path[0]);
@@ -1369,7 +1403,7 @@
         {
             StringBuilder bufferChar = new StringBuilder();
             StringBuilder bufferNum = new StringBuilder();
-            foreach(char c in s)
+            foreach (char c in s)
             {
                 if (c >= 'a' && c <= 'z')
                     bufferChar.Append(c);
@@ -1383,7 +1417,7 @@
             StringBuilder longStr = bufferChar.Length >= bufferNum.Length ? bufferChar : bufferNum;
             StringBuilder shortStr = bufferChar.Length < bufferNum.Length ? bufferChar : bufferNum;
 
-            for(int i = 0; i < shortStr.Length; i++)
+            for (int i = 0; i < shortStr.Length; i++)
             {
                 longStr.Insert(i * 2 + 1, shortStr[i]);
             }
@@ -1398,7 +1432,7 @@
             int ret = -1;
             int max = arr[arr.Length - 1];
             int fre = 1;
-            for(int i = arr.Length - 1; i > 0; i--)
+            for (int i = arr.Length - 1; i > 0; i--)
             {
                 if (arr[i] == arr[i - 1])
                 {
@@ -1438,7 +1472,7 @@
         {
             int ret = 0;
             if (rating == null || rating.Length < 3) return ret;
-            if (rating.Length ==3)
+            if (rating.Length == 3)
             {
                 if (rating[0] > rating[1] && rating[1] > rating[2])
                     ret++;

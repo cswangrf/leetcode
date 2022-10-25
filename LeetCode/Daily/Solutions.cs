@@ -130,24 +130,28 @@
         /// <returns>Return the maximum possible length of s.</returns>
         public int MaxLength(IList<string> arr)
         {
-            Dictionary<char, List<int>> dict = new Dictionary<char, List<int>>();
-            for (int i = 0; i < arr.Count; i++)
+            int[] array = new int[arr.Count];
+            for(int i = 0; i < arr.Count; i++)
             {
+                array[i] = 0;
                 foreach (char c in arr[i])
                 {
-                    if (dict.ContainsKey(c))
+                    int t = 1 << c - 'a';
+                    if ((array[i] & t) == 0)
                     {
-                        dict[c].Add(i);
+                        array[i] += t;
                     }
                     else
                     {
-                        dict.Add(c, new List<int>() { i });
+                        array[i] = 0;
+                        break;
                     }
                 }
             }
+            int ret = 0;
 
             // TODO
-            return -1;
+            return ret;
         }
         #endregion
 

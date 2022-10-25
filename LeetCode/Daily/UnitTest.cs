@@ -8,8 +8,8 @@
     public class UnitTest1 : TestBase
     {
         [TestMethod]
-        //[DataRow(new string[] { "ab", "c" }, new string[] { "a", "bc" }, true)]
-        //[DataRow(new string[] { "a", "cb" }, new string[] { "ab", "c" }, false)]
+        [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bc" }, true)]
+        [DataRow(new string[] { "a", "cb" }, new string[] { "ab", "c" }, false)]
         [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bcd" }, false)]
         public void ArrayStringsAreEqualTest(string[] word1, string[] word2, bool expected)
         {

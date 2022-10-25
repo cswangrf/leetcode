@@ -8,6 +8,16 @@
     public class UnitTest1 : TestBase
     {
         [TestMethod]
+        //[DataRow(new string[] { "ab", "c" }, new string[] { "a", "bc" }, true)]
+        //[DataRow(new string[] { "a", "cb" }, new string[] { "ab", "c" }, false)]
+        [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bcd" }, false)]
+        public void ArrayStringsAreEqualTest(string[] word1, string[] word2, bool expected)
+        {
+            bool actual = this.Solutions.ArrayStringsAreEqual(word1, word2);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         [DataRow(new string[] { "un", "iq", "ue" }, 4)]
         [DataRow(new string[] { "cha", "r", "act", "ers" }, 6)]
         [DataRow(new string[] { "abcdefghijklmnopqrstuvwxyz" }, 26)]

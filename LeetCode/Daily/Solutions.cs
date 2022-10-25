@@ -12,6 +12,111 @@
 
         }
 
+        #region 1662. Check If Two String Arrays are Equivalent
+        /// <summary>
+        /// Given two string arrays word1 and word2, return true if the
+        /// two arrays represent the same string, and false otherwise.
+        /// A string is represented by an array if the array elements
+        /// concatenated in order forms the string.
+        /// https://leetcode.com/problems/check-if-two-string-arrays-are-equivalent/
+        /// </summary>
+        /// <param name="word1"></param>
+        /// <param name="word2"></param>
+        /// <returns></returns>
+        public bool ArrayStringsAreEqual(string[] word1, string[] word2)
+        {
+            /*
+             * Runtime: 114 ms, faster than 83.76% of C# online submissions for Check If Two String Arrays are Equivalent.
+             * Memory Usage: 40.3 MB, less than 15.38% of C# online submissions for Check If Two String Arrays are Equivalent.
+             */
+            ArrayStrings arrayStrings1 = new ArrayStrings(word1);
+            ArrayStrings arrayStrings2 = new ArrayStrings(word2);
+            IEnumerator enumerator1 = arrayStrings1.GetEnumerator();
+            IEnumerator enumerator2 = arrayStrings2.GetEnumerator();
+            bool hasNext1 = enumerator1.MoveNext();
+            bool hasNext2 = enumerator2.MoveNext();
+            while (hasNext1 && hasNext2)
+            {
+                if (!enumerator1.Current.Equals(enumerator2.Current))
+                {
+                    return false;
+                }
+                hasNext1 = enumerator1.MoveNext();
+                hasNext2 = enumerator2.MoveNext();
+            }
+            if(hasNext1 == hasNext2 && enumerator1.Current.Equals(enumerator2.Current))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            /*
+             * Runtime: 97 ms, faster than 94.87% of C# online submissions for Check If Two String Arrays are Equivalent.
+             * Memory Usage: 40.9 MB, less than 8.55% of C# online submissions for Check If Two String Arrays are Equivalent.
+             */
+            // return String.Join("", word1).Equals(String.Join("", word2));
+
+            /*
+             * Runtime: 151 ms, faster than 58.97% of C# online submissions for Check If Two String Arrays are Equivalent.
+             * Memory Usage: 39.6 MB, less than 47.86% of C# online submissions for Check If Two String Arrays are Equivalent.
+             */
+            //int i = 0, j = 0;
+            //int m = 0, n = 0;
+            //while(i < word1.Length && j < word2.Length)
+            //{
+            //    if (m == word1[i].Length || n == word2[j].Length)
+            //    {
+            //        if (m == word1[i].Length)
+            //        {
+            //            m = 0;
+            //            i++;
+            //        }
+            //        if (n == word2[j].Length)
+            //        {
+            //            n = 0;
+            //            j++;
+            //        }
+            //        continue;
+            //    }
+            //    if(word1[i][m] == word2[j][n])
+            //    {
+            //        m++;
+            //        n++;
+            //        continue;
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            //}
+            //if (i == word1.Length && m == 0 && j == word2.Length && n == 0)
+            //    return true;
+            //else
+            //    return false;
+        }
+
+        class ArrayStrings : IEnumerable
+        {
+            private string[] words;
+            public ArrayStrings(string[] words)
+            {
+                this.words = words;
+            }
+            public IEnumerator GetEnumerator()
+            {
+                foreach(string word in this.words)
+                {
+                    foreach(char c in word)
+                    {
+                        yield return c;
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region 1239. Maximum Length of a Concatenated String with Unique Characters
         /// <summary>
         /// You are given an array of strings arr. A string s is formed by the 

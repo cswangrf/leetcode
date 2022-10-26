@@ -12,6 +12,50 @@
 
         }
 
+        #region 523. Continuous Subarray Sum
+        /// <summary>
+        /// Given an integer array nums and an integer k, return true
+        /// if nums has a continuous subarray of size at least two whose
+        /// elements sum up to a multiple of k, or false otherwise.
+        /// An integer x is a multiple of k if there exists an integer n
+        /// such that x = n * k. 0 is always a multiple of k.
+        /// https://leetcode.com/problems/continuous-subarray-sum/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public bool CheckSubarraySum(int[] nums, int k)
+        {
+            //for (int i = 0; i < nums.Length - 1; i++)
+            //{
+            //    int v = nums[i];
+            //    for (int j = i + 1; j < nums.Length; j++)
+            //    {
+            //        v += nums[j];
+            //        if (v % k == 0)
+            //        {
+            //            return true;
+            //        }
+            //    }
+            //}
+            //return false;
+            HashSet<int> modSet = new HashSet<int>();
+            int currSum = 0, prevSum = 0;
+            foreach (int n in nums)
+            {
+                currSum += n;
+                if (modSet.Contains(currSum % k))
+                {
+                    return true;
+                }
+                currSum %= k;
+                modSet.Add(prevSum);
+                prevSum = currSum;
+            }
+            return false;
+        }
+        #endregion
+
         #region 1662. Check If Two String Arrays are Equivalent
         /// <summary>
         /// Given two string arrays word1 and word2, return true if the
@@ -148,7 +192,23 @@
                     }
                 }
             }
+
             int ret = 0;
+            int[] dp = new int[arr.Count];
+            dp[0] = arr[0].Length;
+            for(int i = 1; i < arr.Count; i++)
+            {
+                dp[i] = arr[i].Length;
+                for (int j = i-1; j >= 0; j--)
+                {
+                    if ((array[i] & array[j]) == 0)
+                    {
+                        dp[i] += arr[j].Length;
+                    }
+                }
+                dp[i] = Math.Max(dp[i], dp[i - 1]);
+                ret = Math.Max(ret, dp[i]);
+            }
 
             // TODO
             return ret;

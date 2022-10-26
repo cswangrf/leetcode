@@ -12,6 +12,36 @@
 
         }
 
+        #region 560. Subarray Sum Equals K
+        /// <summary>
+        /// Given an array of integers nums and an integer k, return
+        /// the total number of subarrays whose sum equals to k.
+        /// A subarray is a contiguous non-empty sequence of elements
+        /// within an array.
+        /// https://leetcode.com/problems/subarray-sum-equals-k/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public int SubarraySum(int[] nums, int k)
+        {
+            int ret = 0;
+            HashSet<int> set = new HashSet<int>();
+            int current = 0;
+            set.Add(0);
+            for (int i = 0; i < nums.Length; i++)
+            {
+                current += nums[i];
+                if (set.Contains(current - k))
+                {
+                    ret++;
+                }
+                set.Add(current);
+            }
+            return ret;
+        }
+        #endregion
+
         #region 523. Continuous Subarray Sum
         /// <summary>
         /// Given an integer array nums and an integer k, return true

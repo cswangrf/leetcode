@@ -26,17 +26,24 @@
         public int SubarraySum(int[] nums, int k)
         {
             int ret = 0;
-            HashSet<int> set = new HashSet<int>();
+            Dictionary<int, int> dict = new Dictionary<int, int>();
             int current = 0;
-            set.Add(0);
+            dict.Add(0, 1);
             for (int i = 0; i < nums.Length; i++)
             {
                 current += nums[i];
-                if (set.Contains(current - k))
+                if (dict.ContainsKey(current - k))
                 {
-                    ret++;
+                    ret += dict[current - k];
                 }
-                set.Add(current);
+                if (dict.ContainsKey(current))
+                {
+                    dict[current] += 1;
+                }
+                else
+                {
+                    dict.Add(current, 1);
+                }
             }
             return ret;
         }

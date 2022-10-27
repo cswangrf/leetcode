@@ -8,6 +8,17 @@
     public class UnitTest1 : TestBase
     {
         [TestMethod]
+        [DataRow(new int[] { 1, 2, 3 }, 3, 2)]
+        [DataRow(new int[] { 1, 1, 1 }, 2, 2)]
+        [DataRow(new int[] {1, -1, 0}, 0, 3)]
+        [DataRow(new int[] { 1 }, 1, 1)]
+        public void SubarraySumTest(int[] nums, int k, int expected)
+        {
+            int actual = this.Solutions.SubarraySum(nums, k);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
         [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bc" }, true)]
         [DataRow(new string[] { "a", "cb" }, new string[] { "ab", "c" }, false)]
         [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bcd" }, false)]

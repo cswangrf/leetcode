@@ -1,9 +1,65 @@
 ﻿namespace LeetCode
 {
+    using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
     public partial class Solutions
     {
+        #region 724. Find Pivot Index
+        /// <summary>
+        /// Given an array of integers nums, calculate the pivot 
+        /// index of this array.
+        /// The pivot index is the index where the sum of all the
+        /// numbers strictly to the left of the index is equal to
+        /// the sum of all the numbers strictly to the index's 
+        /// right.
+        /// If the index is on the left edge of the array, then
+        /// the left sum is 0 because there are no elements to 
+        /// the left.This also applies to the right edge of the 
+        /// array.
+        /// Return the leftmost pivot index.If no such index 
+        /// exists, return -1.
+        /// https://leetcode.com/problems/find-pivot-index/
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int PivotIndex(int[] nums)
+        {
+            /*
+             * Runtime: 482 ms, faster than 18.39% of C# online submissions for Find Pivot Index.
+             * Memory Usage: 45.7 MB, less than 14.48% of C# online submissions for Find Pivot Index.
+             */
+            //for (int i = 0; i < nums.Length; i++)
+            //{
+            //    int leftSum = 0, rightSum = 0;
+            //    int left = 0, right = nums.Length - 1;
+            //    while(left < i) leftSum+=nums[left++];
+            //    while(right>i) rightSum +=nums[right--];
+            //    if(leftSum == rightSum) return i;
+            //}
+            //return -1;
+
+            /*
+             * Runtime: 184 ms, faster than 66.78% of C# online submissions for Find Pivot Index.
+             * Memory Usage: 39.6 MB, less than 87.02% of C# online submissions for Find Pivot Index.
+             */
+            int sum = 0;
+            foreach (int i in nums)
+            {
+                sum += i;
+            }
+
+            int temp = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(sum - 2* temp == nums[i]) return i;
+                temp += nums[i];
+            }
+            return -1;
+        }
+        #endregion
+
         #region 560. Subarray Sum Equals K
         /// <summary>
         /// Given an array of integers nums and an integer k, return

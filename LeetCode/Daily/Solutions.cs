@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     public partial class Solutions
@@ -11,6 +12,74 @@
         {
 
         }
+
+        #region 22. Generate Parentheses
+        /// <summary>
+        /// Given n pairs of parentheses, write a function to 
+        /// generate all combinations of well-formed parentheses.
+        /// Example 1:
+        /// Input: n = 3
+        /// Output: ["((()))","(()())","(())()","()(())","()()()"]
+        /// Example 2:
+        /// Input: n = 1
+        /// Output: ["()"]
+        /// Constraints:
+        /// 1 <= n <= 8
+        /// https://leetcode.com/problems/generate-parentheses/
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public IList<string> GenerateParenthesis(int n)
+        {
+            /*
+             * Runtime: 206 ms, faster than 69.64% of C# online submissions for Generate Parentheses.
+             * Memory Usage: 44.7 MB, less than 56.05% of C# online submissions for Generate Parentheses.
+             */
+            Dictionary<int, HashSet<int>> dict = new Dictionary<int, HashSet<int>>();
+            for(int i = 1; i <= n; i++)
+            {
+                int root = 1;
+                int t = i - 1;
+                while(t > 0)
+                {
+                    root = (root << 1) + 1;
+                    t--;
+                }
+                root = root << i;
+                dict.Add(i, new HashSet<int>());
+                dict[i].Add(root);
+                for(int j = 1; j <= i/2; j++)
+                {
+                    foreach (int d1 in dict[i - j])
+                    {
+                        foreach(int d2 in dict[j])
+                        {
+                            dict[i].Add(d2 << 2 * (i - j) | d1);
+                            dict[i].Add(d1 << 2 * j | d2);
+                            if (j == 1)
+                            {
+                                dict[i].Add((1 << 2 * (i - j) | d1) << 1);
+                            }
+                        }
+                    }
+                }
+            }
+            foreach(KeyValuePair<int,HashSet<int>> keyValuePair in dict)
+            {
+                foreach(int i in keyValuePair.Value)
+                {
+                    Console.WriteLine(Convert.ToString(i, 2));
+                }
+            }
+            List<string> ret = new List<string>();
+            foreach(int i in dict[n])
+            {
+                ret.Add(Convert.ToString(i, 2).Replace("1", "(").Replace("0", ")"));
+                Console.WriteLine(Convert.ToString(i, 2).Replace("1", "(").Replace("0", ")"));
+            }
+            return ret;
+        }
+        #endregion
 
         #region 1662. Check If Two String Arrays are Equivalent
         /// <summary>
@@ -117,7 +186,7 @@
         }
         #endregion
 
-        #region 1239. Maximum Length of a Concatenated String with Unique Characters
+        #region TODO 1239. Maximum Length of a Concatenated String with Unique Characters
         /// <summary>
         /// You are given an array of strings arr. A string s is formed by the 
         /// concatenation of a subsequence of arr that has unique characters.

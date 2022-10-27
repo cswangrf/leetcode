@@ -8,6 +8,12 @@
     public class UnitTest1 : TestBase
     {
         [TestMethod]
+        [DataRow(4)]
+        public void GenerateParenthesisTest(int n)
+        {
+            this.Solutions.GenerateParenthesis(n);
+        }
+        [TestMethod]
         [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bc" }, true)]
         [DataRow(new string[] { "a", "cb" }, new string[] { "ab", "c" }, false)]
         [DataRow(new string[] { "ab", "c" }, new string[] { "a", "bcd" }, false)]

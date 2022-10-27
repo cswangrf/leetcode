@@ -53,6 +53,8 @@
     <Compile Include="BinarySearch\BinarySearch.cs" />
     <Compile Include="GCD\GCDSolutions.cs" />
     <Compile Include="GCD\GCDTest.cs" />
+    <Compile Include="PrefixSum\PrefixSumSolution.cs" />
+    <Compile Include="PrefixSum\PrefixSumTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="BinarySearch\TreeNode.cs" />

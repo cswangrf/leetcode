@@ -24,11 +24,13 @@
         }
 
         [TestMethod]
+        [DataRow(new string[] {"abcdefghijklm", "bcdefghijklmn", "cdefghijklmno", "defghijklmnop", "efghijklmnopq", "fghijklmnopqr", "ghijklmnopqrs", "hijklmnopqrst", "ijklmnopqrstu", "jklmnopqrstuv", "klmnopqrstuvw", "lmnopqrstuvwx", "mnopqrstuvwxy", "nopqrstuvwxyz", "opqrstuvwxyza", "pqrstuvwxyzab"}, 26)]
+        [DataRow(new string[] { "aa", "bb" }, 0)]
+        [DataRow(new string[] { "a", "abc", "d", "de", "def" }, 6)]
+        [DataRow(new string[] { "abcdefghijklmnopqrstuvwxyz" }, 26)]
         [DataRow(new string[] { "un", "iq", "ue" }, 4)]
         [DataRow(new string[] { "cha", "r", "act", "ers" }, 6)]
-        [DataRow(new string[] { "abcdefghijklmnopqrstuvwxyz" }, 26)]
         [DataRow(new string[] { "ab", "ba", "cd", "dc", "ef", "fe", "gh", "hg", "ij", "ji", "kl", "lk", "mn", "nm", "op", "po" }, 16)]
-        [DataRow(new string[] { "a", "abc", "d", "de", "def" }, 6)]
         public void MaxLengthTest(IList<string> arr, int expected)
         {
             int actual = this.Solutions.MaxLength(arr);

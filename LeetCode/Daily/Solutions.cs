@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -12,6 +13,44 @@
         {
 
         }
+
+        #region 49. Group Anagrams
+        /// <summary>
+        /// Given an array of strings strs, group the anagrams
+        /// together. You can return the answer in any order.
+        /// An Anagram is a word or phrase formed by rearranging
+        /// the letters of a different word or phrase, typically
+        /// using all the original letters exactly once.
+        /// https://leetcode.com/problems/group-anagrams/
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            /*
+             * Runtime: 340 ms, faster than 49.02% of C# online submissions for Group Anagrams.
+             * Memory Usage: 51.5 MB, less than 26.12% of C# online submissions for Group Anagrams.
+             */
+            Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
+            foreach(string str in strs)
+            {
+                char[] chars = str.ToCharArray();
+                Array.Sort(chars);
+                string key = string.Concat(chars);
+                if(!dict.ContainsKey(key))
+                {
+                    dict.Add(key, new List<string>());
+                }
+                dict[key].Add(str);
+            }
+            List<IList<string>> list = new List<IList<string>>();
+            foreach(KeyValuePair<string, List<string>> keyValuePair in dict)
+            {
+                list.Add(keyValuePair.Value);
+            }
+            return list;
+        }
+        #endregion
 
         #region 22. Generate Parentheses
         /// <summary>
@@ -200,7 +239,7 @@
         public int MaxLength(IList<string> arr)
         {
             int[] array = new int[arr.Count];
-            for(int i = 0; i < arr.Count; i++)
+            for (int i = 0; i < arr.Count; i++)
             {
                 array[i] = 0;
                 foreach (char c in arr[i])
@@ -217,25 +256,48 @@
                     }
                 }
             }
-
             int ret = 0;
-            int[] dp = new int[arr.Count];
-            dp[0] = arr[0].Length;
-            for(int i = 1; i < arr.Count; i++)
+            for (int i = 0; i < arr.Count; i++)
             {
-                dp[i] = arr[i].Length;
-                for (int j = i-1; j >= 0; j--)
+                if (array[i] == 0) continue;
+                int temp = array[i];
+                int tempRet = arr[i].Length;
+                List<int> conflicts = new List<int>();
+                for (int j = 0; j < arr.Count; j++)
                 {
-                    if ((array[i] & array[j]) == 0)
+                    if (i == j) continue;
+                    if ((temp & array[j]) == 0)
                     {
-                        dp[i] += arr[j].Length;
+                        temp = temp | array[j];
+                        tempRet += arr[j].Length;
+                    }
+                    else
+                    {
+                        conflicts.Add(j);
                     }
                 }
-                dp[i] = Math.Max(dp[i], dp[i - 1]);
-                ret = Math.Max(ret, dp[i]);
+                foreach(int c in conflicts)
+                {
+                    temp = array[i];
+                    tempRet = arr[i].Length;
+                    if ((temp & array[c]) == 0)
+                    {
+                        temp = temp | array[c];
+                        tempRet += arr[c].Length;
+                        for (int j = 0; j < arr.Count; j++)
+                        {
+                            if (i == j || c == j) continue;
+                            if ((temp & array[j]) == 0)
+                            {
+                                temp = temp | array[j];
+                                tempRet += arr[j].Length;
+                            }
+                        }
+                    }
+                }
+                ret = Math.Max(ret, tempRet);
             }
 
-            // TODO
             return ret;
         }
         #endregion

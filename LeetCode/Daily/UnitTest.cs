@@ -8,6 +8,17 @@
     public class UnitTest1 : TestBase
     {
         [TestMethod]
+        [DataRow(-2147483648, -1, 2147483647)]
+        [DataRow(1, 2, 0)]
+        [DataRow(-1, 1, -1)]
+        [DataRow(10, 3, 3)]
+        public void DivideTest(int dividend, int divisor, int expected)
+        {
+            int actual = this.Solutions.Divide(dividend, divisor);
+            Assert.AreEqual(expected, actual); 
+        }
+
+        [TestMethod]
         [DataRow(4)]
         public void GenerateParenthesisTest(int n)
         {

@@ -32,19 +32,19 @@
              * Memory Usage: 51.5 MB, less than 26.12% of C# online submissions for Group Anagrams.
              */
             Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>();
-            foreach(string str in strs)
+            foreach (string str in strs)
             {
                 char[] chars = str.ToCharArray();
                 Array.Sort(chars);
                 string key = string.Concat(chars);
-                if(!dict.ContainsKey(key))
+                if (!dict.ContainsKey(key))
                 {
                     dict.Add(key, new List<string>());
                 }
                 dict[key].Add(str);
             }
             List<IList<string>> list = new List<IList<string>>();
-            foreach(KeyValuePair<string, List<string>> keyValuePair in dict)
+            foreach (KeyValuePair<string, List<string>> keyValuePair in dict)
             {
                 list.Add(keyValuePair.Value);
             }
@@ -75,11 +75,11 @@
              * Memory Usage: 44.7 MB, less than 56.05% of C# online submissions for Generate Parentheses.
              */
             Dictionary<int, HashSet<int>> dict = new Dictionary<int, HashSet<int>>();
-            for(int i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++)
             {
                 int root = 1;
                 int t = i - 1;
-                while(t > 0)
+                while (t > 0)
                 {
                     root = (root << 1) + 1;
                     t--;
@@ -87,11 +87,11 @@
                 root = root << i;
                 dict.Add(i, new HashSet<int>());
                 dict[i].Add(root);
-                for(int j = 1; j <= i/2; j++)
+                for (int j = 1; j <= i / 2; j++)
                 {
                     foreach (int d1 in dict[i - j])
                     {
-                        foreach(int d2 in dict[j])
+                        foreach (int d2 in dict[j])
                         {
                             dict[i].Add(d2 << 2 * (i - j) | d1);
                             dict[i].Add(d1 << 2 * j | d2);
@@ -103,15 +103,15 @@
                     }
                 }
             }
-            foreach(KeyValuePair<int,HashSet<int>> keyValuePair in dict)
+            foreach (KeyValuePair<int, HashSet<int>> keyValuePair in dict)
             {
-                foreach(int i in keyValuePair.Value)
+                foreach (int i in keyValuePair.Value)
                 {
                     Console.WriteLine(Convert.ToString(i, 2));
                 }
             }
             List<string> ret = new List<string>();
-            foreach(int i in dict[n])
+            foreach (int i in dict[n])
             {
                 ret.Add(Convert.ToString(i, 2).Replace("1", "(").Replace("0", ")"));
                 Console.WriteLine(Convert.ToString(i, 2).Replace("1", "(").Replace("0", ")"));
@@ -152,7 +152,7 @@
                 hasNext1 = enumerator1.MoveNext();
                 hasNext2 = enumerator2.MoveNext();
             }
-            if(hasNext1 == hasNext2 && enumerator1.Current.Equals(enumerator2.Current))
+            if (hasNext1 == hasNext2 && enumerator1.Current.Equals(enumerator2.Current))
             {
                 return true;
             }
@@ -214,9 +214,9 @@
             }
             public IEnumerator GetEnumerator()
             {
-                foreach(string word in this.words)
+                foreach (string word in this.words)
                 {
-                    foreach(char c in word)
+                    foreach (char c in word)
                     {
                         yield return c;
                     }
@@ -276,7 +276,7 @@
                         conflicts.Add(j);
                     }
                 }
-                foreach(int c in conflicts)
+                foreach (int c in conflicts)
                 {
                     temp = array[i];
                     tempRet = arr[i].Length;
@@ -299,6 +299,82 @@
             }
 
             return ret;
+        }
+        #endregion
+
+        #region TODO 29. Divide Two Integers
+        /// <summary>
+        /// Given two integers dividend and divisor, divide two integers
+        /// without using multiplication, division, and mod operator.
+        /// The integer division should truncate toward zero, which means
+        /// losing its fractional part. For example, 8.345 would be truncated
+        /// to 8, and -2.7335 would be truncated to -2.
+        /// Return the quotient after dividing dividend by divisor.
+        /// Note: Assume we are dealing with an environment that could only
+        /// store integers within the 32-bit signed integer range: 
+        /// [−2<31>, 2<31> − 1]. For this problem, if the quotient is strictly
+        /// greater than 2<31> - 1, then return 2<31> - 1, and if the quotient 
+        /// is strictly less than -231, then return -2<31>.
+        /// https://leetcode.com/problems/divide-two-integers/
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        public int Divide(int dividend, int divisor)
+        {
+            if (dividend == divisor) return 1;
+            if ((dividend > 0 && divisor > 0 && dividend < divisor)
+                || (dividend < 0 && divisor < 0 && dividend > divisor))
+                return 1;
+            Stack<int> stack = new Stack<int>();
+            while (dividend > divisor)
+            {
+                stack.Push(dividend & 1);
+                dividend >>= 1;
+            }
+            int ret = Math.Abs(dividend - divisor);
+            ret <<= stack.Count;
+            while (stack.Count > 0)
+            {
+                ret += stack.Pop();
+                ret <<= stack.Count;
+            }
+            return ret;
+
+            // Time Limit Exceeded
+            //if (dividend == 0) return 0;
+            //long ret = 0;
+            //long d1 = Math.Abs((long)dividend);
+            //long d2 = Math.Abs((long)divisor);
+            //if (d1 == d2)
+            //{
+            //    ret = 1;
+            //}
+            //else if(d1 < d2)
+            //{
+            //    ret = 0;
+            //}
+            //else
+            //{
+
+            //    while (d1 >= d2)
+            //    {
+            //        d1 -= d2;
+            //        ret++;
+            //    }
+            //}
+            //if ((dividend <= 0 && divisor <= 0) || (dividend >= 0 && divisor >= 0))
+            //{
+            //}
+            //else
+            //{
+            //    ret = 0 - ret;
+            //}
+            //if(ret > 2147483647)
+            //    ret = 2147483647;
+            //if (ret < -2147483648)
+            //    ret = -2147483648;
+            //return (int)ret;
         }
         #endregion
 
